@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Disponibilidade de Produto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+            background: linear-gradient(to right,rgb(119, 0, 255),rgb(164, 103, 243));
+            
+        }
+        input{
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        button{
+            font-weight: bold;
+            cursor: pointer;
+            background-color: rgb(220, 220, 238);
+            border-radius: 10rem;
+            border-color: red;
+            font-size: 1rem;
+            padding: 15px 32px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        p1{
+            color: blue;
+            background-color: bisque;
+        }
+        .titulo{
+            padding: 10px;
+            border-radius: 10rem;
+            background-color: rgb(73, 73, 231);
+            inline-size: auto;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="titulo">Verificar Disponibilidade de Produto</h1>
+    <br>
+    <br>
+    <br>
+    <h3>Digite a SKU do Produto</h3>
+    <label for="sku"></label>
+    <input type="number" id="sku" min="0">
+    <br>
+    <br>
+    <br>
+    <button onclick="verificarDisponibilidade()">Verificar Disponibilidade</button>
+    <br>
+    <br>
+    <p1 class="resultado" id="resultado"></p1>
+
+    <script>
+        // Lista de produtos
+        const produtos = [
+            { sku: 1001, nome: 'Camiseta', quantidade: 5 },
+            { sku: 1002, nome: 'Calça', quantidade: 10 },
+            { sku: 1003, nome: 'Vestido', quantidade: 3 }
+        ];
+
+        // Função para verificar se um produto está disponível em estoque
+        function produtoDisponivel(sku, listaProdutos) {
+            const produto = listaProdutos.find(item => item.sku === sku);
+            return produto ? produto.quantidade > 0 : false;
+        }
+
+        function verificarDisponibilidade() {
+            const sku = parseInt(document.getElementById('sku').value, 10);
+            const resultado = document.getElementById('resultado');
+            
+            if (isNaN(sku) || sku <= 0) {
+                resultado.textContent = 'Por favor, insira um SKU válido.';
+                return;
+            }
+            
+            const disponivel = produtoDisponivel(sku, produtos);
+            if (disponivel) {
+                resultado.textContent = 'Produto disponível em estoque. (true)';
+            } else {
+                resultado.textContent = 'Produto não disponível em estoque. (false)';
+            }
+        }
+    </script>
+</body>
+</html>

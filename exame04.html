@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Estoque</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+            background: linear-gradient(to right,rgb(119, 0, 255),rgb(164, 103, 243));
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: antiquewhite;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        
+        }
+        button {
+            font-weight: bold;
+            cursor: pointer;
+            background-color: rgb(220, 220, 238);
+            border-radius: 10rem;
+            border-color: red;
+            font-size: 1rem;
+            padding: 15px 32px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estoque Atual</h1>
+    <table id="estoqueTable">
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas de estoque serão adicionadas aqui -->
+        </tbody>
+    </table>
+    <button onclick="atualizarEstoque()">Atualizar Estoque</button>
+
+    <script>
+        const itensVendidos = [
+            { sku: 1001, quantidade: 2 },
+            { sku: 1002, quantidade: 1 },
+            { sku: 1003, quantidade: 5 }
+        ];
+
+        const estoque = [
+            { sku: 1001, quantidade: 5 },
+            { sku: 1002, quantidade: 2 },
+            { sku: 1003, quantidade: 5 }
+        ];
+
+        function mostrarEstoque() {
+            const tableBody = document.getElementById('estoqueTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // Limpar a tabela existente
+            estoque.forEach(item => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = item.sku;
+                row.insertCell(1).textContent = item.quantidade;
+            });
+        }
+
+        function atualizarEstoque() {
+            itensVendidos.forEach(venda => {
+                const itemEstoque = estoque.find(item => item.sku === venda.sku);
+                if (itemEstoque) {
+                    itemEstoque.quantidade -= venda.quantidade;
+                    if (itemEstoque.quantidade < 0) {
+                        itemEstoque.quantidade = 0;
+                    }
+                }
+            });
+            mostrarEstoque();
+        }
+
+        // Mostrar o estoque inicial
+        mostrarEstoque();
+    </script>
+</body>
+</html>
